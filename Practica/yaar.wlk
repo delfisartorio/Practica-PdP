@@ -3,9 +3,13 @@ class Barco{
     var property tripulantes = #{}
     const property  capacidad
 
+    method puedeRealizarMision(){
+      return mision.puedeSerRealizadaPor(self)
+    }
+
     method esTemible(){
       const capaces = tripulantes.filter({tripulante => tripulante.puedeRealizarMision(mision)})
-      return mision.puedeRealizarMision(self) && capaces.length()>=5
+      return self.puedeRealizarMision() && capaces.length()>=5
     } 
     
     method tripulacionSuficiente(){
@@ -82,7 +86,7 @@ class Espia inherits Pirata{
 }
 
 class Mision{
-    method puedeRealizarMision(barco) {
+    method puedeSerRealizadaPor(barco) {
       const cantidadDeTripulantes = barco.tripulantes().lenght()
       return cantidadDeTripulantes.between(barco.capacidad()*0.9, barco.capacidad())
     }
@@ -95,7 +99,7 @@ class BusquedaDelTesoro inherits Mision{
         
       return itemsBuscados.any({item => itemsDelPirata.contains(item)}) && pirata.dinero()<=5
     }
-    override method puedeRealizarMision(barco){
+    override method puedeSerRealizadaPor(barco){
       super(barco)
       return barco.tripulantes().any({tripulante=> tripulante.items().contains("llave de cofre")})
     }
@@ -117,7 +121,7 @@ class Saqueo inherits Mision{
     method tripulanteUtil(pirata){
       return pirata.dinero()<dineroLimite && pirata.seAnimaASaquear()
     }
-    override method puedeRealizarMision(barco){
+    override method puedeSerRealizadaPor(barco){
         super(barco)
         return victima.vulnerableA(barco)
     }
