@@ -25,8 +25,12 @@ class Barco{
 
     method incorporarTripulante(pirata){
       if(pirata.puedeSerTripulante(self)){
-        tripulantes.add(pirata)
+        tripulantes.add(pirata) && self.hayLugar()
       }
+    }
+
+    method hayLugar(){
+      return capacidad > self.tripulantes().length()
     }
     method cambiarDeMision(nuevaMision){
         mision = nuevaMision
@@ -73,13 +77,13 @@ class Pirata{
         dinero-=ciudad.precio()
         nivelEbriedad+=5
       }
+      else self.error("No puede pagarlo")
     }
 }
 
 class Espia inherits Pirata{
-  override method pasadoDeGrogXD(){
-    return false
-  }
+  override method pasadoDeGrogXD() = false
+  
   override method seAnimaASaquear(victima){
     return super(victima) && items.contains("permiso de la corona")
   }
@@ -129,13 +133,13 @@ class Saqueo inherits Mision{
 
 class CiudadCostera{
     var property cantidadHabitantes
-    var precio
+    var precio // en el resuelto esta como const property pero no se bien porque
     method condicionSaqueo(pirata){
       pirata.nivelEbriedad()>=50
     }
     method esVulnerableA(barco){
       return barco.tripulantes().length()>= cantidadHabitantes*0.4 || 
-      barco.tripulantes().all({tripulante => tripulante.pasadoDeGrogXD()})
+      barco.tripulantes().all({tripulante => tripulante.pasadoDeGrogXD()}) // podria haber delegado
     }
     method aumentarPoblacion(cantidad){
       cantidadHabitantes+=cantidad
