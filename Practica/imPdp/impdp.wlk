@@ -1,0 +1,103 @@
+object imPdP{
+
+    method artistaMejorPago(){
+      
+    }
+    method peliculasEconomicas(){
+      
+    }
+    method gananciaPeliculasEconomicas() {
+      
+    }
+}
+
+class Pelicula {
+  const nombre
+  const property elenco = #{}
+
+  method presupuesto(){
+    const sueldoElenco = elenco.map({artista => artista.sueldo()}).sum()
+    return sueldoElenco*1.7
+  }
+  method ganancias() {
+    return self.recaudo()-self.presupuesto()
+  }
+  method recaudo(){
+    return 1000000 + self.recaudoExtra()
+  }
+  method recaudoExtra()
+
+  method rodarPelicula(){
+    elenco.forEach({artista => artista.actuar()})
+  } 
+}
+
+class GeneroDrama inherits Pelicula{
+    override method recaudoExtra(){
+        const cantidadLetras = nombre.length()
+        return 100000*cantidadLetras
+    }
+}
+class GeneroAccion inherits Pelicula{
+    const vidriosRotos
+    override method recaudoExtra(){
+        const cantidadArtistasElenco = elenco.length()
+        return 50000*cantidadArtistasElenco
+    }
+    override method presupuesto(){
+      return super() + 1000*vidriosRotos
+    }
+}
+class GeneroTerror inherits Pelicula{
+    const cantidadDeCuchos
+    override method recaudoExtra(){
+      return 20000*cantidadDeCuchos
+    }
+}
+class GeneroComedia inherits Pelicula{
+    override method recaudoExtra(){
+      return 0
+    }
+}
+
+class Artista{
+    var property peliculasActuadas
+    var property ahorros
+    var property experiencia
+    
+    method nivelDeFama(){
+      return peliculasActuadas/2
+    }
+
+    method sueldo(){
+      if(experiencia=="amateur"){
+        return 10000
+      } else if(experiencia == "establecido"){
+        if(self.nivelDeFama()<15){
+            return 15000
+        }
+        else{
+            return 5000*self.nivelDeFama()
+        }
+      }
+      else{ //estoy programando no APB, supongo q el usuario solo ingresa amateur, establecido y estrella
+        return 30000*peliculasActuadas
+      }
+    } 
+    method recategorizar(){
+      if(experiencia == "amateur" and peliculasActuadas>=10){
+        experiencia = "establecido"
+      } else if(experiencia == "establecido" && self.nivelDeFama()>=10){
+        experiencia = "estrella"
+      } else if(experiencia == "establecido"){
+        self.error("No puede ser recateforizado, ya es estrella⭐")
+      }else{
+        self.error("No esta en condiciones de recategorizarse")
+      }
+    } 
+
+    method actuar(){
+        peliculasActuadas+=1
+        ahorros += self.sueldo()
+    }
+}

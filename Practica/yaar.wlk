@@ -133,7 +133,7 @@ class Saqueo inherits Mision{
 
 class CiudadCostera{
     var property cantidadHabitantes
-    var precio // en el resuelto esta como const property pero no se bien porque
+    const property precio // en el resuelto esta como const property pero no se bien porque
     method condicionSaqueo(pirata){
       pirata.nivelEbriedad()>=50
     }
