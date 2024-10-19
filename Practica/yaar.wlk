@@ -9,7 +9,7 @@ class Barco{
 
     method esTemible(){
       const capaces = tripulantes.filter({tripulante => tripulante.puedeRealizarMision(mision)})
-      return self.puedeRealizarMision() && capaces.length()>=5
+      return self.puedeRealizarMision() and capaces.length()>=5
     } 
     
     method tripulacionSuficiente(){
@@ -25,7 +25,7 @@ class Barco{
 
     method incorporarTripulante(pirata){
       if(pirata.puedeSerTripulante(self)){
-        tripulantes.add(pirata) && self.hayLugar()
+        tripulantes.add(pirata) and self.hayLugar()
       }
     }
 
@@ -101,7 +101,7 @@ class BusquedaDelTesoro inherits Mision{
       const itemsDelPirata = pirata.items()
       const itemsBuscados = ["brújula", "mapa", "botella de grogXD "]
         
-      return itemsBuscados.any({item => itemsDelPirata.contains(item)}) && pirata.dinero()<=5
+      return itemsBuscados.any({item => itemsDelPirata.contains(item)}) and pirata.dinero()<=5
     }
     override method puedeSerRealizadaPor(barco){
       super(barco)
@@ -114,7 +114,7 @@ class ConvertirseEnLeyenda inherits Mision{
     method tripulanteUtil(pirata){
         const itemsPirata = pirata.items()
 
-        return itemsPirata.length()>=10 && itemsPirata.contains(itemObligatorio)
+        return itemsPirata.length()>=10 and itemsPirata.contains(itemObligatorio)
     }
 }
 
@@ -123,7 +123,7 @@ class Saqueo inherits Mision{
     var property dineroLimite
 
     method tripulanteUtil(pirata){
-      return pirata.dinero()<dineroLimite && pirata.seAnimaASaquear()
+      return pirata.dinero()<dineroLimite and pirata.seAnimaASaquear()
     }
     override method puedeSerRealizadaPor(barco){
         super(barco)
