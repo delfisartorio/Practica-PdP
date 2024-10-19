@@ -1,18 +1,34 @@
 object imPdP{
+    var property artistas =#{}
+    var property peliculas = #{}
 
+    method agregarPelicula(pelicula){
+        peliculas.add(pelicula)
+        artistas.add(pelicula.artistas()) // considero artistas solo a los que hayan actuado en alguna peli
+    } 
     method artistaMejorPago(){
-      
+        const mejorPago = artistas.max({artista => artista.sueldo()})
+        return mejorPago
     }
+
     method peliculasEconomicas(){
-      
+      return peliculas.filter({pelicula => pelicula.presupuesto()<500000})
+    }
+    method nombrePeliculasEconomicas(){
+      const economicas = self.peliculasEconomicas()
+      return economicas.map({pelicula => pelicula.nombre()})
     }
     method gananciaPeliculasEconomicas() {
-      
+      const ganancias = self.peliculasEconomicas().map({pelicula => pelicula.ganancias()})
+      return ganancias.sum()
+    }
+    method recategorizar(artista){
+        artista.recategorizar()
     }
 }
 
 class Pelicula {
-  const nombre
+  const property nombre
   const property elenco = #{}
 
   method presupuesto(){
