@@ -71,3 +71,16 @@ class Huevo{
     var fuerza
     var peso
 }
+
+object isla{
+    var pajarosDeLaIsla = [red,bomb,chuck,terence,matilda]
+
+    method pajarosMasFuertes(){
+        const losFuertes = pajarosDeLaIsla.filter({pajaro=> pajaro.fuerza()>50})
+        return losFuertes
+    }
+    method fuerzaDeLaIsla(){
+        const losFuertes = pajarosDeLaIsla.pajarosMasFuertes()
+        return losFuertes.map({pajaro => pajaro.fuerza()}).sum()
+    }
+}
