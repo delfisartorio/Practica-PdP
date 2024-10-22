@@ -77,9 +77,9 @@ class GeneroComedia inherits Pelicula{
 }
 
 class Artista{
-    var property peliculasActuadas
-    var property ahorros
-    var property experiencia
+    var peliculasActuadas
+    var ahorros
+    var experiencia
     
     method nivelDeFama(){
       return peliculasActuadas/2
