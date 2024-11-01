@@ -1,6 +1,6 @@
 object veterinaria {
   const familiasInscriptas = #{}
-  var animalesDisponibles = #{}
+  const animalesDisponibles = #{}
 
   method familiasConMenoresSinMascotas(){
     const familias = familiasInscriptas.filter({familia => familia.any({integrante => integrante.esMenorDeEdad()}) && familia.noTieneMascotas()})
@@ -21,7 +21,7 @@ object veterinaria {
 
 class Familia {
   const integrantes = #{}
-  var mascotasQueTienen = #{}
+  const mascotasQueTienen = #{}
   const tamanioDeLaCasa
   
   method espacioDisponible() {
@@ -40,9 +40,9 @@ class Familia {
 }
 
 class Persona {
-  var edad
-  var esAlergica
-  var animalesQueOdia
+  const edad
+  const esAlergica
+  const animalesQueOdia
   
   method tamanoQueOcupa() {
     if (edad >= 13) {
