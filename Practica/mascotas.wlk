@@ -7,7 +7,8 @@ object veterinaria {
     return familias.size()
   }
   method animalesDesamparados(){
-    animalesDisponibles.filter({animal => !familiasInscriptas.any({familia=>familia.puedeAdoptar(animal)})})
+   const losDesamparados = animalesDisponibles.filter({animal => !familiasInscriptas.any({familia=>familia.puedeAdoptar(animal)})})
+   return losDesamparados.map({animal => animal.nombre()})
   }
   method familiasBondadosas() = familiasInscriptas.filter({familia => animalesDisponibles.all({animal => animal.puedeSerAdoptadoPor(familia)})})
 
