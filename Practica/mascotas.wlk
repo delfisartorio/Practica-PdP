@@ -59,7 +59,7 @@ class Persona {
 }
 
 class Animal {
-  const nombre
+  const property nombre
   method tieneProblemasCon(animal)
   method tamanoQueOcupa()
   
