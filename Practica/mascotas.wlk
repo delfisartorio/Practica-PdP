@@ -12,6 +12,7 @@ object veterinaria {
   }
   method familiasBondadosas() = familiasInscriptas.filter({familia => animalesDisponibles.all({animal => animal.puedeSerAdoptadoPor(familia)})})
   method animalDisponible(animal) = animalesDisponibles.find(animal)
+  method darEnAdopcion(animal) = animalesDisponibles.remove(animal)
 }
 
 class Familia {
@@ -35,7 +36,7 @@ class Familia {
 
   method adoptar(animal){
     if(veterinaria.animalDisponible(animal) && self.puedeAdoptar(animal)){
-      veterinaria.animalesDisponibles.remove(animal)
+      veterinaria.darEnAdopcion(animal)
       mascotasQueTienen.add(animal)
     } else{
       throw new AdopcionException (message = "No se pudo completar la adopcion")
