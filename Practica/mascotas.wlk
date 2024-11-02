@@ -3,7 +3,7 @@ object veterinaria {
   const animalesDisponibles = #{}
 
   method familiasConMenoresSinMascotas(){
-    const familias = familiasInscriptas.filter({familia => familia.any({integrante => integrante.esMenorDeEdad()}) && familia.noTieneMascotas()})
+    const familias = familiasInscriptas.filter({familia => familia.tieneMenores() && familia.noTieneMascotas()})
     return familias.size()
   }
   method animalesDesamparados(){
@@ -11,13 +11,7 @@ object veterinaria {
    return losDesamparados.map({animal => animal.nombre()})
   }
   method familiasBondadosas() = familiasInscriptas.filter({familia => animalesDisponibles.all({animal => animal.puedeSerAdoptadoPor(familia)})})
-
-  method adoptar(animal,familia){ // obvio el hecho de que el animal tiene que estar en el set y no puede ser uno x
-    if(familia.puedeAdoptar(animal)){
-        familia.mascotasQueTienen().add(animal)
-        animalesDisponibles.remove(animal)
-    } throw new AdopcionException(message = "No se pudo concretar la adopcion")
-  }
+  method animalDisponible(animal) = animalesDisponibles.find(animal)
 }
 
 class Familia {
@@ -31,13 +25,24 @@ class Familia {
     return 0.max(tamanioDeLaCasa - espacioIntegrantes - espacioMascotas)
   }
   
-  method tieneLugarPara(animal) = (self.espacioDisponible() - animal.tamanoQueOcupa()) > 0
+  method tieneLugarPara(animal) = self.espacioDisponible() > animal.tamanoQueOcupa() 
   method algunoTieneProblemasCon(animal) = integrantes.any({integrante => integrante.tieneProblemasCon(animal)}) 
                                             || mascotasQueTienen.any({mascota => mascota.tieneProblemasCon(animal)}) 
 
   method puedeAdoptar(animal) = self.tieneLugarPara(animal) && !self.algunoTieneProblemasCon(animal)
 
   method noTieneMascotas() = mascotasQueTienen.size() == 0
+
+  method adoptar(animal){
+    if(veterinaria.animalDisponible(animal) && self.puedeAdoptar(animal)){
+      veterinaria.animalesDisponibles.remove(animal)
+      mascotasQueTienen.add(animal)
+    } else{
+      throw new AdopcionException (message = "No se pudo completar la adopcion")
+    } 
+  }
+
+  method tieneMenores() = integrantes.any({integrante => integrante.esMenor()})
 }
 
 class Persona {
