@@ -11,7 +11,7 @@ class Vikingo{
     method item() = item
     method hambre() = hambre.min(100).max(0)
     method hambreQueSiente(posta) = posta.hambreQueLeDa(self) 
-     method puedeParticipar(posta) = self.hambre() + self.hambreQueSiente(posta) < 100
+    method puedeParticipar(posta) = self.hambre() + self.hambreQueSiente(posta) < 100
 
     method participarEn(torneo){
         if(!torneo.puedeParticipar(self)){
